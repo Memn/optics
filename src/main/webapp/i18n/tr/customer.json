@@ -20,7 +20,7 @@
             "phoneNumber": "Telefon Numarası",
             "identityNumber": "Kimlik Numarası",
             "address": "Adres",
-            "remainingDebt": "Borç",
+            "debt": "Borç",
             "shop": "Mağaza",
             "sale": "Satış",
             "payment": "Ödeme"

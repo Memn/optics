@@ -7,11 +7,11 @@
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
             "entities": {
                 "main": "Varlıklar",
-                "shop": "Shop",
-                "customer": "Customer",
-                "sale": "Sale",
-                "product": "Product",
-                "payment": "Payment",
+                "shop": "Mağaza",
+                "customer": "Müşteri",
+                "sale": "Satış",
+                "product": "Ürün",
+                "payment": "Ödeme",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

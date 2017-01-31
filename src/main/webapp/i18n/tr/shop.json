@@ -2,26 +2,26 @@
     "opticsApp": {
         "shop" : {
             "home": {
-                "title": "Shops",
-                "createLabel": "Create a new Shop",
-                "createOrEditLabel": "Create or edit a Shop",
-                "search": "Search for Shop"
+                "title": "Mağazalar",
+                "createLabel": "Mağaza Oluştur",
+                "createOrEditLabel": "Mağaza Oluştur veya Güncelle",
+                "search": "Mağazalarda Ara"
             },
-            "created": "A new Shop is created with identifier {{ param }}",
-            "updated": "A Shop is updated with identifier {{ param }}",
-            "deleted": "A Shop is deleted with identifier {{ param }}",
+            "created": "Yeni Mağaza oluşturuldu {{ param }}",
+            "updated": "Mağaza güncellendi {{ param }}",
+            "deleted": "Mağaza silindi {{ param }}",
             "delete": {
-                "question": "Are you sure you want to delete Shop {{ id }}?"
+                "question": "{{ id }} kayıtlı Mağaza silinecek. Emin misiniz??"
             },
             "detail": {
-                "title": "Shop"
+                "title": "Mağaza"
             },
-            "name": "Name",
-            "address": "Address",
-            "phoneNumber": "Phone Number",
-            "customer": "Customer",
-            "user": "User",
-            "product": "Product"
+            "name": "Adı",
+            "address": "Adres",
+            "phoneNumber": "Telefon Numarası",
+            "customer": "Müşteri",
+            "user": "Kullanıcı",
+            "product": "Ürün"
         }
     }
 }

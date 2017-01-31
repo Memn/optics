@@ -1,28 +1,28 @@
 {
-    "opticsApp": {
+    "magazamApp": {
         "sale" : {
             "home": {
-                "title": "Sales",
-                "createLabel": "Create a new Sale",
-                "createOrEditLabel": "Create or edit a Sale",
-                "search": "Search for Sale"
+                "title": "Satışlar",
+                "createLabel": "Satış Oluştur",
+                "createOrEditLabel": "Satış Oluştur veya Güncelle",
+                "search": "Satışlarda Ara"
             },
-            "created": "A new Sale is created with identifier {{ param }}",
-            "updated": "A Sale is updated with identifier {{ param }}",
-            "deleted": "A Sale is deleted with identifier {{ param }}",
+            "created": "Yeni Satış oluşturuldu {{ param }}",
+            "updated": "Satış güncellendi {{ param }}",
+            "deleted": "Satış silindi {{ param }}",
             "delete": {
-                "question": "Are you sure you want to delete Sale {{ id }}?"
+                "question": "{{ id }} kayıtlı Satış silinecek. Emin misiniz??"
             },
             "detail": {
-                "title": "Sale"
+                "title": "Satış"
             },
-            "amount": "Amount",
-            "date": "Date",
-            "ensurance": "Ensurance",
-            "note": "Note",
-            "product": "Product",
-            "customer": "Customer",
-            "shop": "Shop"
+            "amount": "Tutar",
+            "date": "Tarih",
+            "ensurance": "Sigorta",
+            "note": "Not",
+            "product": "Ürün",
+            "customer": "Müşteri",
+            "shop": "Mağaza"
         }
     }
 }

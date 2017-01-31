@@ -2,24 +2,24 @@
     "opticsApp": {
         "payment" : {
             "home": {
-                "title": "Payments",
-                "createLabel": "Create a new Payment",
-                "createOrEditLabel": "Create or edit a Payment",
-                "search": "Search for Payment"
+                "title": "Ödemeler",
+                "createLabel": "Ödeme Oluştur",
+                "createOrEditLabel": "Ödeme Oluştur veya Güncelle",
+                "search": "Ödemelerde Ara"
             },
-            "created": "A new Payment is created with identifier {{ param }}",
-            "updated": "A Payment is updated with identifier {{ param }}",
-            "deleted": "A Payment is deleted with identifier {{ param }}",
+            "created": "Yeni Ödeme oluşturuldu {{ param }}",
+            "updated": "Ödeme güncellendi {{ param }}",
+            "deleted": "Ödeme silindi {{ param }}",
             "delete": {
-                "question": "Are you sure you want to delete Payment {{ id }}?"
+                "question": "{{ id }} kayıtlı Ödeme silinecek. Emin misiniz??"
             },
             "detail": {
-                "title": "Payment"
+                "title": "Ödeme"
             },
-            "date": "Date",
-            "amount": "Amount",
-            "paymentType": "Payment Type",
-            "customer": "Customer"
+            "date": "Tarih",
+            "amount": "Tutar",
+            "paymentType": "Ödeme Tipi",
+            "customer": "Müşteri"
         }
     }
 }

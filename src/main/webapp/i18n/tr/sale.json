@@ -21,7 +21,8 @@
             "ensurance": "Ensurance",
             "note": "Note",
             "product": "Product",
-            "customer": "Customer"
+            "customer": "Customer",
+            "shop": "Shop"
         }
     }
 }

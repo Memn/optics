@@ -44,5 +44,7 @@
 
     <cache alias="com.memin.optics.domain.Customer.payments" uses-template="simple"/>
 
+    <cache alias="com.memin.optics.domain.Shop.products" uses-template="simple"/>
+
     <!-- jhipster-needle-ehcache-add-entry -->
 </config>

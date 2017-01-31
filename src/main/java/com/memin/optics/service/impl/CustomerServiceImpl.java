@@ -1,5 +1,7 @@
 package com.memin.optics.service.impl;
 
+import com.memin.optics.security.AuthoritiesConstants;
+import com.memin.optics.security.SecurityUtils;
 import com.memin.optics.service.CustomerService;
 import com.memin.optics.domain.Customer;
 import com.memin.optics.repository.CustomerRepository;
@@ -26,7 +28,7 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 public class CustomerServiceImpl implements CustomerService{
 
     private final Logger log = LoggerFactory.getLogger(CustomerServiceImpl.class);
-    
+
     @Inject
     private CustomerRepository customerRepository;
 
@@ -48,14 +50,19 @@ public class CustomerServiceImpl implements CustomerService{
 
     /**
      *  Get all the customers.
-     *  
+     *
      *  @param pageable the pagination information
      *  @return the list of entities
      */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public Page<Customer> findAll(Pageable pageable) {
         log.debug("Request to get all Customers");
-        Page<Customer> result = customerRepository.findAll(pageable);
+        Page<Customer> result;
+        if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
+            result = customerRepository.findAll(pageable);
+        } else {
+            result = customerRepository.findByShopUserLogin(SecurityUtils.getCurrentUserLogin(), pageable);
+        }
         return result;
     }
 
@@ -65,7 +72,7 @@ public class CustomerServiceImpl implements CustomerService{
      *  @param id the id of the entity
      *  @return the entity
      */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public Customer findOne(Long id) {
         log.debug("Request to get Customer : {}", id);
         Customer customer = customerRepository.findOne(id);

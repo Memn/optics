@@ -1,5 +1,8 @@
 package com.memin.optics.service.impl;
 
+import com.memin.optics.domain.Sale;
+import com.memin.optics.security.AuthoritiesConstants;
+import com.memin.optics.security.SecurityUtils;
 import com.memin.optics.service.ProductService;
 import com.memin.optics.domain.Product;
 import com.memin.optics.repository.ProductRepository;
@@ -26,7 +29,7 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 public class ProductServiceImpl implements ProductService{
 
     private final Logger log = LoggerFactory.getLogger(ProductServiceImpl.class);
-    
+
     @Inject
     private ProductRepository productRepository;
 
@@ -48,14 +51,20 @@ public class ProductServiceImpl implements ProductService{
 
     /**
      *  Get all the products.
-     *  
+     *
      *  @param pageable the pagination information
      *  @return the list of entities
      */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public Page<Product> findAll(Pageable pageable) {
         log.debug("Request to get all Products");
-        Page<Product> result = productRepository.findAll(pageable);
+
+        Page<Product> result;
+        if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
+            result = productRepository.findAll(pageable);
+        } else {
+            result = productRepository.findByShopUserLogin(SecurityUtils.getCurrentUserLogin(),pageable);
+        }
         return result;
     }
 
@@ -65,7 +74,7 @@ public class ProductServiceImpl implements ProductService{
      *  @param id the id of the entity
      *  @return the entity
      */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public Product findOne(Long id) {
         log.debug("Request to get Product : {}", id);
         Product product = productRepository.findOne(id);

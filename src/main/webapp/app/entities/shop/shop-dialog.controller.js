@@ -5,9 +5,9 @@
         .module('opticsApp')
         .controller('ShopDialogController', ShopDialogController);
 
-    ShopDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Shop', 'Customer', 'User'];
+    ShopDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Shop', 'Customer', 'User', 'Product'];
 
-    function ShopDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Shop, Customer, User) {
+    function ShopDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Shop, Customer, User, Product) {
         var vm = this;
 
         vm.shop = entity;
@@ -15,6 +15,7 @@
         vm.save = save;
         vm.customers = Customer.query();
         vm.users = User.query();
+        vm.products = Product.query();
 
         $timeout(function (){
             angular.element('.form-group:eq(1)>input').focus();

@@ -2,10 +2,10 @@ package com.memin.optics.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.memin.optics.domain.Payment;
+import com.memin.optics.service.CustomerOperationService;
 import com.memin.optics.service.PaymentService;
 import com.memin.optics.web.rest.util.HeaderUtil;
 import com.memin.optics.web.rest.util.PaginationUtil;
-
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +14,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -22,10 +30,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing Payment.
@@ -35,9 +39,12 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 public class PaymentResource {
 
     private final Logger log = LoggerFactory.getLogger(PaymentResource.class);
-        
+
     @Inject
     private PaymentService paymentService;
+
+    @Inject
+    private CustomerOperationService customerOperationService;
 
     /**
      * POST  /payments : Create a new payment.
@@ -53,7 +60,7 @@ public class PaymentResource {
         if (payment.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("payment", "idexists", "A new payment cannot already have an ID")).body(null);
         }
-        Payment result = paymentService.save(payment);
+        Payment result = customerOperationService.pay(payment);
         return ResponseEntity.created(new URI("/api/payments/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("payment", result.getId().toString()))
             .body(result);
@@ -75,7 +82,7 @@ public class PaymentResource {
         if (payment.getId() == null) {
             return createPayment(payment);
         }
-        Payment result = paymentService.save(payment);
+        Payment result = customerOperationService.updatePayment(payment);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert("payment", payment.getId().toString()))
             .body(result);
@@ -126,7 +133,7 @@ public class PaymentResource {
     @Timed
     public ResponseEntity<Void> deletePayment(@PathVariable Long id) {
         log.debug("REST request to delete Payment : {}", id);
-        paymentService.delete(id);
+        customerOperationService.deletePayment(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("payment", id.toString())).build();
     }
 
@@ -134,7 +141,7 @@ public class PaymentResource {
      * SEARCH  /_search/payments?query=:query : search for the payment corresponding
      * to the query.
      *
-     * @param query the query of the payment search 
+     * @param query the query of the payment search
      * @param pageable the pagination information
      * @return the result of the search
      * @throws URISyntaxException if there is an error to generate the pagination HTTP headers

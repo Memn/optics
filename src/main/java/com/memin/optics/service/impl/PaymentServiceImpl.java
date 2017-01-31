@@ -1,5 +1,7 @@
 package com.memin.optics.service.impl;
 
+import com.memin.optics.security.AuthoritiesConstants;
+import com.memin.optics.security.SecurityUtils;
 import com.memin.optics.service.PaymentService;
 import com.memin.optics.domain.Payment;
 import com.memin.optics.repository.PaymentRepository;
@@ -26,7 +28,7 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 public class PaymentServiceImpl implements PaymentService{
 
     private final Logger log = LoggerFactory.getLogger(PaymentServiceImpl.class);
-    
+
     @Inject
     private PaymentRepository paymentRepository;
 
@@ -48,14 +50,19 @@ public class PaymentServiceImpl implements PaymentService{
 
     /**
      *  Get all the payments.
-     *  
+     *
      *  @param pageable the pagination information
      *  @return the list of entities
      */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public Page<Payment> findAll(Pageable pageable) {
         log.debug("Request to get all Payments");
-        Page<Payment> result = paymentRepository.findAll(pageable);
+        Page<Payment> result;
+        if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
+            result = paymentRepository.findAll(pageable);
+        } else {
+            result = paymentRepository.findByCustomerShopUserLogin(SecurityUtils.getCurrentUserLogin(), pageable);
+        }
         return result;
     }
 
@@ -65,7 +72,7 @@ public class PaymentServiceImpl implements PaymentService{
      *  @param id the id of the entity
      *  @return the entity
      */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public Payment findOne(Long id) {
         log.debug("Request to get Payment : {}", id);
         Payment payment = paymentRepository.findOne(id);

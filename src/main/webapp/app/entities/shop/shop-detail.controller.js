@@ -5,9 +5,9 @@
         .module('opticsApp')
         .controller('ShopDetailController', ShopDetailController);
 
-    ShopDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'Shop', 'Customer', 'User'];
+    ShopDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'Shop', 'Customer', 'User', 'Product'];
 
-    function ShopDetailController($scope, $rootScope, $stateParams, previousState, entity, Shop, Customer, User) {
+    function ShopDetailController($scope, $rootScope, $stateParams, previousState, entity, Shop, Customer, User, Product) {
         var vm = this;
 
         vm.shop = entity;

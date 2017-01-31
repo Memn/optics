@@ -13,6 +13,12 @@
             "relationshipName": "user",
             "otherEntityName": "user",
             "otherEntityField": "login"
+        },
+        {
+            "relationshipName": "product",
+            "otherEntityName": "product",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "shop"
         }
     ],
     "fields": [
@@ -33,8 +39,8 @@
         }
     ],
     "changelogDate": "20170131112432",
-    "entityTableName": "shop",
     "dto": "no",
-    "pagination": "infinite-scroll",
-    "service": "serviceImpl"
+    "service": "serviceImpl",
+    "entityTableName": "shop",
+    "pagination": "infinite-scroll"
 }

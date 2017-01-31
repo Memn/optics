@@ -17,7 +17,8 @@
                 "title": "Product"
             },
             "name": "Name",
-            "sale": "Sale"
+            "sale": "Sale",
+            "shop": "Shop"
         }
     }
 }

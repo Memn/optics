@@ -2,6 +2,8 @@ package com.memin.optics.repository;
 
 import com.memin.optics.domain.Sale;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 
@@ -19,4 +21,5 @@ public interface SaleRepository extends JpaRepository<Sale,Long> {
     @Query("select sale from Sale sale left join fetch sale.products where sale.id =:id")
     Sale findOneWithEagerRelationships(@Param("id") Long id);
 
+    Page<Sale> findByShopUserLogin(String currentUserLogin, Pageable pageable);
 }

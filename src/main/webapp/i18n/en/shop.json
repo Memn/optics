@@ -20,7 +20,8 @@
             "address": "Address",
             "phoneNumber": "Phone Number",
             "customer": "Customer",
-            "user": "User"
+            "user": "User",
+            "product": "Product"
         }
     }
 }

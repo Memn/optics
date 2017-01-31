@@ -41,6 +41,7 @@
                     <th jh-sort-by="ensurance"><span data-translate="opticsApp.sale.ensurance">Ensurance</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="note"><span data-translate="opticsApp.sale.note">Note</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="customer.name"><span data-translate="opticsApp.sale.customer">Customer</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="shop.name"><span data-translate="opticsApp.sale.shop">Shop</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
                 </tr>
             </thead>
@@ -53,6 +54,9 @@
                     <td>{{sale.note}}</td>
                     <td>
                         <a ui-sref="customer-detail({id:sale.customer.id})">{{sale.customer.name}}</a>
+                    </td>
+                    <td>
+                        <a ui-sref="shop-detail({id:sale.shop.id})">{{sale.shop.name}}</a>
                     </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">

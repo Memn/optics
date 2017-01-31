@@ -25,5 +25,11 @@
                                  referencedColumnNames="id"
                                  referencedTableName="customer"/>
 
+        <addForeignKeyConstraint baseColumnNames="shop_id"
+                                 baseTableName="sale"
+                                 constraintName="fk_sale_shop_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="shop"/>
+
     </changeSet>
 </databaseChangeLog>

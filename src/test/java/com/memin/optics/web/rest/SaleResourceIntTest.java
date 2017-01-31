@@ -5,6 +5,7 @@ import com.memin.optics.OpticsApp;
 import com.memin.optics.domain.Sale;
 import com.memin.optics.domain.Product;
 import com.memin.optics.domain.Customer;
+import com.memin.optics.domain.Shop;
 import com.memin.optics.repository.SaleRepository;
 import com.memin.optics.service.SaleService;
 import com.memin.optics.repository.search.SaleSearchRepository;
@@ -113,6 +114,11 @@ public class SaleResourceIntTest {
         em.persist(customer);
         em.flush();
         sale.setCustomer(customer);
+        // Add required entity
+        Shop shop = ShopResourceIntTest.createEntity(em);
+        em.persist(shop);
+        em.flush();
+        sale.setShop(shop);
         return sale;
     }
 

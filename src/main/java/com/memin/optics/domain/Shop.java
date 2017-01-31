@@ -46,6 +46,11 @@ public class Shop implements Serializable {
     @NotNull
     private User user;
 
+    @OneToMany(mappedBy = "shop")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Product> products = new HashSet<>();
+
     public Long getId() {
         return id;
     }
@@ -129,6 +134,31 @@ public class Shop implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Set<Product> getProducts() {
+        return products;
+    }
+
+    public Shop products(Set<Product> products) {
+        this.products = products;
+        return this;
+    }
+
+    public Shop addProduct(Product product) {
+        products.add(product);
+        product.setShop(this);
+        return this;
+    }
+
+    public Shop removeProduct(Product product) {
+        products.remove(product);
+        product.setShop(null);
+        return this;
+    }
+
+    public void setProducts(Set<Product> products) {
+        this.products = products;
     }
 
     @Override

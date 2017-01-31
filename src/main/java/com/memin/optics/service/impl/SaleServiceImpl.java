@@ -1,5 +1,7 @@
 package com.memin.optics.service.impl;
 
+import com.memin.optics.security.AuthoritiesConstants;
+import com.memin.optics.security.SecurityUtils;
 import com.memin.optics.service.SaleService;
 import com.memin.optics.domain.Sale;
 import com.memin.optics.repository.SaleRepository;
@@ -26,7 +28,7 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 public class SaleServiceImpl implements SaleService{
 
     private final Logger log = LoggerFactory.getLogger(SaleServiceImpl.class);
-    
+
     @Inject
     private SaleRepository saleRepository;
 
@@ -48,14 +50,19 @@ public class SaleServiceImpl implements SaleService{
 
     /**
      *  Get all the sales.
-     *  
+     *
      *  @param pageable the pagination information
      *  @return the list of entities
      */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public Page<Sale> findAll(Pageable pageable) {
         log.debug("Request to get all Sales");
-        Page<Sale> result = saleRepository.findAll(pageable);
+        Page<Sale> result;
+        if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
+            result = saleRepository.findAll(pageable);
+        } else {
+            result = saleRepository.findByShopUserLogin(SecurityUtils.getCurrentUserLogin(),pageable);
+        }
         return result;
     }
 
@@ -65,7 +72,7 @@ public class SaleServiceImpl implements SaleService{
      *  @param id the id of the entity
      *  @return the entity
      */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public Sale findOne(Long id) {
         log.debug("Request to get Sale : {}", id);
         Sale sale = saleRepository.findOneWithEagerRelationships(id);

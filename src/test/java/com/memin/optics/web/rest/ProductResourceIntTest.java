@@ -3,6 +3,7 @@ package com.memin.optics.web.rest;
 import com.memin.optics.OpticsApp;
 
 import com.memin.optics.domain.Product;
+import com.memin.optics.domain.Shop;
 import com.memin.optics.repository.ProductRepository;
 import com.memin.optics.service.ProductService;
 import com.memin.optics.repository.search.ProductSearchRepository;
@@ -83,6 +84,11 @@ public class ProductResourceIntTest {
     public static Product createEntity(EntityManager em) {
         Product product = new Product()
                 .name(DEFAULT_NAME);
+        // Add required entity
+        Shop shop = ShopResourceIntTest.createEntity(em);
+        em.persist(shop);
+        em.flush();
+        product.setShop(shop);
         return product;
     }
 

@@ -56,6 +56,10 @@ public class Sale implements Serializable {
     @NotNull
     private Customer customer;
 
+    @ManyToOne
+    @NotNull
+    private Shop shop;
+
     public Long getId() {
         return id;
     }
@@ -152,6 +156,19 @@ public class Sale implements Serializable {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public Shop getShop() {
+        return shop;
+    }
+
+    public Sale shop(Shop shop) {
+        this.shop = shop;
+        return this;
+    }
+
+    public void setShop(Shop shop) {
+        this.shop = shop;
     }
 
     @Override

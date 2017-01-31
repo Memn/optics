@@ -36,6 +36,10 @@ public class Product implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Sale> sales = new HashSet<>();
 
+    @ManyToOne
+    @NotNull
+    private Shop shop;
+
     public Long getId() {
         return id;
     }
@@ -80,6 +84,19 @@ public class Product implements Serializable {
 
     public void setSales(Set<Sale> sales) {
         this.sales = sales;
+    }
+
+    public Shop getShop() {
+        return shop;
+    }
+
+    public Product shop(Shop shop) {
+        this.shop = shop;
+        return this;
+    }
+
+    public void setShop(Shop shop) {
+        this.shop = shop;
     }
 
     @Override

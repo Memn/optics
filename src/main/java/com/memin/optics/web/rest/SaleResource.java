@@ -2,6 +2,7 @@ package com.memin.optics.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.memin.optics.domain.Sale;
+import com.memin.optics.service.CustomerOperationService;
 import com.memin.optics.service.SaleService;
 import com.memin.optics.web.rest.util.HeaderUtil;
 import com.memin.optics.web.rest.util.PaginationUtil;
@@ -35,9 +36,12 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 public class SaleResource {
 
     private final Logger log = LoggerFactory.getLogger(SaleResource.class);
-        
+
     @Inject
     private SaleService saleService;
+
+    @Inject
+    private CustomerOperationService customerOperationService;
 
     /**
      * POST  /sales : Create a new sale.
@@ -53,7 +57,7 @@ public class SaleResource {
         if (sale.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("sale", "idexists", "A new sale cannot already have an ID")).body(null);
         }
-        Sale result = saleService.save(sale);
+        Sale result = customerOperationService.sale(sale);
         return ResponseEntity.created(new URI("/api/sales/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("sale", result.getId().toString()))
             .body(result);
@@ -75,7 +79,7 @@ public class SaleResource {
         if (sale.getId() == null) {
             return createSale(sale);
         }
-        Sale result = saleService.save(sale);
+        Sale result = customerOperationService.updateSale(sale);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert("sale", sale.getId().toString()))
             .body(result);
@@ -126,7 +130,7 @@ public class SaleResource {
     @Timed
     public ResponseEntity<Void> deleteSale(@PathVariable Long id) {
         log.debug("REST request to delete Sale : {}", id);
-        saleService.delete(id);
+        customerOperationService.deleteSale(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("sale", id.toString())).build();
     }
 
@@ -134,7 +138,7 @@ public class SaleResource {
      * SEARCH  /_search/sales?query=:query : search for the sale corresponding
      * to the query.
      *
-     * @param query the query of the sale search 
+     * @param query the query of the sale search
      * @param pageable the pagination information
      * @return the result of the search
      * @throws URISyntaxException if there is an error to generate the pagination HTTP headers

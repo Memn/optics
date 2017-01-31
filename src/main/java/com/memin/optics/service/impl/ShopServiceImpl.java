@@ -1,5 +1,7 @@
 package com.memin.optics.service.impl;
 
+import com.memin.optics.security.AuthoritiesConstants;
+import com.memin.optics.security.SecurityUtils;
 import com.memin.optics.service.ShopService;
 import com.memin.optics.domain.Shop;
 import com.memin.optics.repository.ShopRepository;
@@ -26,7 +28,7 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 public class ShopServiceImpl implements ShopService{
 
     private final Logger log = LoggerFactory.getLogger(ShopServiceImpl.class);
-    
+
     @Inject
     private ShopRepository shopRepository;
 
@@ -48,14 +50,19 @@ public class ShopServiceImpl implements ShopService{
 
     /**
      *  Get all the shops.
-     *  
+     *
      *  @param pageable the pagination information
      *  @return the list of entities
      */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public Page<Shop> findAll(Pageable pageable) {
         log.debug("Request to get all Shops");
-        Page<Shop> result = shopRepository.findAll(pageable);
+        Page<Shop> result;
+        if (SecurityUtils.isCurrentUserInRole(AuthoritiesConstants.ADMIN)) {
+            result = shopRepository.findAll(pageable);
+        } else {
+            result = shopRepository.findByUserIsCurrentUser(pageable);
+        }
         return result;
     }
 
@@ -65,7 +72,7 @@ public class ShopServiceImpl implements ShopService{
      *  @param id the id of the entity
      *  @return the entity
      */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public Shop findOne(Long id) {
         log.debug("Request to get Shop : {}", id);
         Shop shop = shopRepository.findOne(id);

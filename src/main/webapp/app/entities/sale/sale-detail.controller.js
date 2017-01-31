@@ -5,9 +5,9 @@
         .module('opticsApp')
         .controller('SaleDetailController', SaleDetailController);
 
-    SaleDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'Sale', 'Product', 'Customer'];
+    SaleDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'Sale', 'Product', 'Customer', 'Shop'];
 
-    function SaleDetailController($scope, $rootScope, $stateParams, previousState, entity, Sale, Product, Customer) {
+    function SaleDetailController($scope, $rootScope, $stateParams, previousState, entity, Sale, Product, Customer, Shop) {
         var vm = this;
 
         vm.sale = entity;

@@ -1,0 +1,10 @@
+{
+    "opticsApp": {
+        "PaymentType" : {
+            "null": "",
+            "CASH": "CASH",
+            "CREDIT_CARD": "CREDIT_CARD",
+            "OTHER": "OTHER"
+        }
+    }
+}

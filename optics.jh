@@ -1,0 +1,25 @@
+// JDL definition for application 'optics' generated with command 'yo jhipster:export-jdl'
+
+entity Shop (shop) {
+  name String required,
+  address String,
+  phoneNumber String
+}
+entity Customer (customer) {
+  name String required,
+  phoneNumber String,
+  identityNumber String minlength(11) maxlength(11),
+  address String
+}
+
+relationship OneToMany {
+  Shop{customer} to Customer{shop(name) required}
+}
+relationship ManyToOne {
+  Shop{user(login) required} to User
+}
+
+paginate Shop with infinite-scroll
+service Shop with serviceImpl
+paginate Customer with infinite-scroll
+service Customer with serviceImpl

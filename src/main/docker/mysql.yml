@@ -1,0 +1,14 @@
+version: '2'
+services:
+    optics-mysql:
+        container_name: optics-mysql
+        image: mysql:5.7.13
+        # volumes:
+        #     - ~/volumes/jhipster/optics/mysql/:/var/lib/mysql/
+        environment:
+            - MYSQL_USER=root
+            - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+            - MYSQL_DATABASE=optics
+        ports:
+            - 3306:3306
+        command: mysqld --lower_case_table_names=1 --skip-ssl
